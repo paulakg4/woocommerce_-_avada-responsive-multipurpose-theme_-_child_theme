@@ -1,5 +1,5 @@
 <?php
-// Template Name: Portfolio One Column Text
+// Template Name: Product Portfolio One Column Text
 get_header(); ?>
 	<?php
 	$content_css = 'width:100%';
@@ -29,7 +29,7 @@ get_header(); ?>
 		<?php $current_page_id = $post->ID; ?>
 		<?php endwhile; ?>
 		<?php
-		$portfolio_category = get_terms('portfolio_category');
+		$portfolio_category = get_terms('product_cat');
 		if($portfolio_category):
 		?>
 		<ul class="portfolio-tabs clearfix">
@@ -53,7 +53,7 @@ get_header(); ?>
 				$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 			}
 			$args = array(
-				'post_type' => 'avada_portfolio',
+				'post_type' => 'product',
 				'paged' => $paged,
 				'posts_per_page' => $data['portfolio_items'],
 			);
@@ -63,7 +63,7 @@ get_header(); ?>
 			}
 			if($pcats){
 				$args['tax_query'][] = array(
-					'taxonomy' => 'portfolio_category',
+					'taxonomy' => 'product_cat',
 					'field' => 'ID',
 					'terms' => $pcats
 				);
@@ -79,7 +79,7 @@ get_header(); ?>
 			?>
 			<?php
 			$item_classes = '';
-			$item_cats = get_the_terms($post->ID, 'portfolio_category');
+			$item_cats = get_the_terms($post->ID, 'product_cat');
 			if($item_cats):
 			foreach($item_cats as $item_cat) {
 				$item_classes .= $item_cat->slug . ' ';
@@ -115,7 +115,7 @@ get_header(); ?>
 				<?php endif; ?>
 				<div class="portfolio-content">
 					<h2><a href="<?php echo $permalink; ?>"><?php the_title(); ?></a></h2>
-					<h4><?php echo get_the_term_list($post->ID, 'portfolio_category', '', ', ', ''); ?></h4>
+					<h4><?php echo get_the_term_list($post->ID, 'product_cat', '', ', ', ''); ?></h4>
 					<?php
 					if(get_post_meta($current_page_id, 'pyre_portfolio_excerpt', true)) {
 						$excerpt_length = get_post_meta($current_page_id, 'pyre_portfolio_excerpt', true);
