@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 get_header('shop'); ?>
     <?php
     $content_css = 'float:right;'; // <- this doesnt work, float it right in your style.css or something
-    $sidebar_css = 'position:relative;float:left;';
+    $sidebar_css = 'float:left;';
 	?>
 	<?php
 		/**
@@ -50,7 +50,7 @@ get_header('shop'); ?>
             //var_dump($post_ancestors);
             $post_parent = end($post_ancestors);
             ?>
-            <li><a href="http://jindienails.bitnamiapp.com"><img src="http://jindienails.bitnamiapp.com/wp-content/uploads/logo1.png" alt="Jindie Nails" class="image"></a></li>
+            <li><a href="http://jindienails.bitnamiapp.com/test"><img src="http://jindienails.bitnamiapp.com/wp-content/uploads/logo1.png" alt="Jindie Nails" class="image"></a></li>
             <?php if(is_page($post_parent)): ?><?php endif; ?>
             <li <?php if(is_page($post_parent)): ?>class="current_page_item"<?php endif; ?>><a href="<?php echo get_permalink($post_parent); ?>" title="Back to Parent Page"><?php echo get_the_title($post_parent); ?></a></li>
             <?php

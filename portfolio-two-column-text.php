@@ -40,7 +40,7 @@ get_header(); ?>
 		<?php
 
 		$cat1 = get_terms('pa_base-color');
-		$cat2 = get_terms('pa_collection');
+		$cat2 = get_terms('pa_bling');
 		$portfolio_category = ($cat1 + $cat2);
 		if($portfolio_category && get_post_meta($post->ID, 'pyre_portfolio_filters', true) != 'no'):
 		?>
@@ -93,7 +93,7 @@ get_header(); ?>
 					'terms' => $pcats
 				);
 				$args['tax_query'][] = array(
-					'taxonomy' => 'pa_collection',
+					'taxonomy' => 'pa_bling',
 					'field' => 'ID',
 					'terms' => $pcats
 				);
@@ -115,7 +115,7 @@ get_header(); ?>
 				$item_classes .= $item_cat->slug . ' ';
 			}
 			endif;
-			$item_cats = get_the_terms($post->ID, 'pa_collection');
+			$item_cats = get_the_terms($post->ID, 'pa_bling');
 			if($item_cats):
 			foreach($item_cats as $item_cat) {
 				$item_classes .= $item_cat->slug . ' ';
@@ -154,6 +154,9 @@ get_header(); ?>
 					?>
 					<div class="image-extras">
 						<div class="image-extras-content">
+							<h2><a href="<?php echo $icon_permalink; ?>"><?php the_title(); ?></a></h2>
+                            <h3><?php echo woocommerce_template_single_price(); ?></h3>
+
 							<a style="<?php echo $link_icon_css; ?>" class="icon link-icon" href="<?php echo $icon_permalink; ?>">Permalink</a>
 							<?php $full_image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full'); ?>
 							<?php
@@ -162,17 +165,14 @@ get_header(); ?>
 							}
 							?>
 							<a style="<?php echo $zoom_icon_css; ?>" class="icon gallery-icon" href="<?php echo $full_image[0]; ?>" rel="prettyPhoto[gallery]" title="<?php echo get_post_field('post_content', get_post_thumbnail_id($post->ID)); ?>"><img style="display:none;" alt="<?php echo get_post_field('post_excerpt', get_post_thumbnail_id($post->ID)); ?>" />Gallery</a>
-							<h3><?php the_title(); ?></h3>
-							$getterms[]
-							<h4><?php echo get_the_term_list($post->ID, 'pa_base-color', '', ', ', ''); ?></h4>
-							<h4><?php echo get_the_term_list($post->ID, 'pa_collection', '', ', ', ''); ?></h4>
-						</div>
+	                    </div>
 					</div>
+
 				</div>
 				<?php endif; ?>
 				<div class="portfolio-content">
 					<h2><a href="<?php echo $permalink; ?>"><?php the_title(); ?></a></h2>
-					<h4><?php echo get_the_term_list($post->ID, 'pa_collection', '', ', ', ''); ?></h4>
+					<h4><?php echo get_the_term_list($post->ID, 'pa_bling', '', ', ', ''); ?></h4>
 					<h3><?php echo get_the_term_list($post->ID, 'pa_base-color', '', ', ', ''); ?></h3>
 					<?php
 					if(get_post_meta($current_page_id, 'pyre_portfolio_excerpt', true)) {
@@ -198,7 +198,7 @@ get_header(); ?>
 			//var_dump($post_ancestors);
 			$post_parent = end($post_ancestors);
 			?>
-            <li><a href="http://jindienails.bitnamiapp.com"><img src="http://jindienails.bitnamiapp.com/wp-content/uploads/logo1.png" alt="Jindie Nails" class="image"></a></li>
+            <li><a href="http://jindienails.bitnamiapp.com/test"><img src="http://jindienails.bitnamiapp.com/wp-content/uploads/logo1.png" alt="Jindie Nails" class="image"></a></li>
 			<?php if(is_page($post_parent)): ?><?php endif; ?>
 			<li <?php if(is_page($post_parent)): ?>class="current_page_item"<?php endif; ?>><a href="<?php echo get_permalink($post_parent); ?>" title="Back to Parent Page"><?php echo get_the_title($post_parent); ?></a></li>
 			<?php
