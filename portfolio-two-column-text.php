@@ -40,25 +40,14 @@ get_header(); ?>
 		<?php
 
 		$cat1 = get_terms('pa_base-color');
-		$cat2 = get_terms('pa_bling');
+		$cat2 = get_terms('pa_collection');
 		$portfolio_category = ($cat1 + $cat2);
 		if($portfolio_category && get_post_meta($post->ID, 'pyre_portfolio_filters', true) != 'no'):
 		?>
-		<ul class="portfolio-tabs clearfix">
-			<li class="active"><a data-filter="*" href="#"><?php echo __('All Colors', 'Avada'); ?></a></li>
-			<?php foreach($cat1 as $portfolio_cat): ?>
-			<?php if(get_post_meta(get_the_ID(), 'pyre_portfolio_category', true)  && !in_array('0', get_post_meta(get_the_ID(), 'pyre_portfolio_category', true))): ?>
-			<?php if(in_array($portfolio_cat->term_id, get_post_meta(get_the_ID(), 'pyre_portfolio_category', true))): ?>
-			<li><a data-filter=".<?php echo $portfolio_cat->slug; ?>" href="#"><?php echo $portfolio_cat->name; ?></a></li>
-			<?php endif; ?>
-			<?php else: ?>
-			<li><a data-filter=".<?php echo $portfolio_cat->slug; ?>" href="#"><?php echo $portfolio_cat->name; ?></a></li>
-			<?php endif; ?>
-			<?php endforeach; ?>
-		</ul>
+
         <ul class="portfolio-tabs clearfix">
-            <li class="active"><a data-filter="*" href="#"><?php echo __('All Collections', 'Avada'); ?></a></li>
-            <?php foreach($cat2 as $portfolio_cat): ?>
+            <li class="active"><a data-filter="*" href="#"><?php echo __('Colors', 'Avada'); ?></a></li>
+            <?php foreach($cat1 as $portfolio_cat): ?>
             <?php if(get_post_meta(get_the_ID(), 'pyre_portfolio_category', true)  && !in_array('0', get_post_meta(get_the_ID(), 'pyre_portfolio_category', true))): ?>
             <?php if(in_array($portfolio_cat->term_id, get_post_meta(get_the_ID(), 'pyre_portfolio_category', true))): ?>
             <li><a data-filter=".<?php echo $portfolio_cat->slug; ?>" href="#"><?php echo $portfolio_cat->name; ?></a></li>
@@ -93,7 +82,7 @@ get_header(); ?>
 					'terms' => $pcats
 				);
 				$args['tax_query'][] = array(
-					'taxonomy' => 'pa_bling',
+					'taxonomy' => 'pa_collection',
 					'field' => 'ID',
 					'terms' => $pcats
 				);
@@ -115,7 +104,7 @@ get_header(); ?>
 				$item_classes .= $item_cat->slug . ' ';
 			}
 			endif;
-			$item_cats = get_the_terms($post->ID, 'pa_bling');
+			$item_cats = get_the_terms($post->ID, 'pa_collection');
 			if($item_cats):
 			foreach($item_cats as $item_cat) {
 				$item_classes .= $item_cat->slug . ' ';
@@ -155,7 +144,7 @@ get_header(); ?>
 					<div class="image-extras">
 						<div class="image-extras-content">
 							<h2><a href="<?php echo $icon_permalink; ?>"><?php the_title(); ?></a></h2>
-                            <h3><?php echo woocommerce_template_single_price(); ?></h3>
+                            <h3 style="font-size:145%;"><?php echo woocommerce_template_single_price(); ?></h3>
 
 							<a style="<?php echo $link_icon_css; ?>" class="icon link-icon" href="<?php echo $icon_permalink; ?>">Permalink</a>
 							<?php $full_image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full'); ?>
@@ -172,7 +161,7 @@ get_header(); ?>
 				<?php endif; ?>
 				<div class="portfolio-content">
 					<h2><a href="<?php echo $permalink; ?>"><?php the_title(); ?></a></h2>
-					<h4><?php echo get_the_term_list($post->ID, 'pa_bling', '', ', ', ''); ?></h4>
+					<h4><?php echo get_the_term_list($post->ID, 'pa_collection', '', ', ', ''); ?></h4>
 					<h3><?php echo get_the_term_list($post->ID, 'pa_base-color', '', ', ', ''); ?></h3>
 					<?php
 					if(get_post_meta($current_page_id, 'pyre_portfolio_excerpt', true)) {
@@ -189,7 +178,7 @@ get_header(); ?>
 		</div>
 		<?php themefusion_pagination($gallery->max_num_pages, $range = 2); ?>
 	</div>
-<div id="sidebar" style="<?php echo $sidebar_css; ?>">
+<div id="sidebar" class="side-nav" style="<?php echo $sidebar_css; ?>">
 		<ul class="side-nav">
 			<?php wp_reset_query(); ?>
 			<?php
@@ -198,7 +187,7 @@ get_header(); ?>
 			//var_dump($post_ancestors);
 			$post_parent = end($post_ancestors);
 			?>
-            <li><a href="http://jindienails.bitnamiapp.com/test"><img src="http://jindienails.bitnamiapp.com/wp-content/uploads/logo1.png" alt="Jindie Nails" class="image"></a></li>
+            <li><a href="http://jindienails.bitnamiapp.com/"><img src="http://jindienails.bitnamiapp.com/wp-content/uploads/logo1.png" alt="Jindie Nails" class="image"></a></li>
 			<?php if(is_page($post_parent)): ?><?php endif; ?>
 			<li <?php if(is_page($post_parent)): ?>class="current_page_item"<?php endif; ?>><a href="<?php echo get_permalink($post_parent); ?>" title="Back to Parent Page"><?php echo get_the_title($post_parent); ?></a></li>
 			<?php
@@ -213,6 +202,19 @@ get_header(); ?>
 			<?php echo $children; ?>
 			<?php } ?>
 		</ul>
+		<ul class="side-nav">
+			<li class="active"><a data-filter="*" href="#"><?php echo __('All', 'Avada'); ?></a></li>
+			<?php foreach($cat2 as $portfolio_cat): ?>
+			<?php if(get_post_meta(get_the_ID(), 'pyre_portfolio_category', true)  && !in_array('0', get_post_meta(get_the_ID(), 'pyre_portfolio_category', true))): ?>
+			<?php if(in_array($portfolio_cat->term_id, get_post_meta(get_the_ID(), 'pyre_portfolio_category', true))): ?>
+			<li><a data-filter=".<?php echo $portfolio_cat->slug; ?>" href="#"><?php echo $portfolio_cat->name; ?></a></li>
+			<?php endif; ?>
+			<?php else: ?>
+			<li><a data-filter=".<?php echo $portfolio_cat->slug; ?>" href="#"><?php echo $portfolio_cat->name; ?></a></li>
+			<?php endif; ?>
+			<?php endforeach; ?>
+		</ul>
+
 		<?php
 		$selected_sidebar_replacement = get_post_meta($post->ID, 'sbg_selected_sidebar_replacement', true);
 		if(!$selected_sidebar_replacement[0] == 0) {
